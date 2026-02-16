@@ -1,0 +1,4 @@
+name = "ZPy"
+version = 0.1
+
+print("Welcome to", name, "version", version)

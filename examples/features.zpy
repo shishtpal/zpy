@@ -1,0 +1,133 @@
+# ZPy Feature Demo
+# Tests new interpreter features
+
+# String escape sequences
+print("Hello\tWorld")
+print("Line 1\nLine 2")
+print("Quote: \"hello\"")
+print("Backslash: \\")
+
+# String multiplication
+print("=" * 30)
+print("ha" * 3)
+print(3 * "abc")
+
+# Negative indexing
+nums = [10, 20, 30, 40, 50]
+print("Last:", nums[-1])
+print("Second to last:", nums[-2])
+
+msg = "hello"
+print("Last char:", msg[-1])
+
+# Index assignment with negative
+nums[-1] = 99
+print("After nums[-1] = 99:", nums)
+
+# Membership operators (in / not in)
+print(3 in [1, 2, 3])
+print(5 not in [1, 2, 3])
+print("ell" in "hello")
+print("xyz" not in "hello")
+
+fruits = {"apple": 1, "banana": 2}
+print("apple" in fruits)
+print("cherry" not in fruits)
+
+# Three-argument range
+print("Range with step 2:")
+for i in range(0, 10, 2):
+    print(i)
+
+print("Range counting down:")
+for i in range(5, 0, -1):
+    print(i)
+
+# String methods
+s = "  Hello, World!  "
+print(s.strip())
+print("hello".upper())
+print("HELLO".lower())
+print("hello world".split())
+print(",".join(["a", "b", "c"]))
+print("hello".find("ll"))
+print("hello world".replace("world", "ZPy"))
+print("hello".startswith("hel"))
+print("hello".endswith("llo"))
+print("hello".count("l"))
+
+# List methods
+nums = [3, 1, 4, 1, 5]
+nums.append(9)
+print("After append:", nums)
+last = nums.pop()
+print("Popped:", last, "List:", nums)
+nums.insert(0, 42)
+print("After insert:", nums)
+nums.reverse()
+print("Reversed:", nums)
+print("Index of 4:", nums.index(4))
+print("Count of 1:", nums.count(1))
+
+# List copy
+copy = nums.copy()
+copy.append(999)
+print("Original:", nums)
+print("Copy:", copy)
+
+# Dict methods
+d = {"x": 1, "y": 2, "z": 3}
+print("Keys:", d.keys())
+print("Values:", d.values())
+print("Items:", d.items())
+print("Get x:", d.get("x"))
+print("Get w (default 0):", d.get("w", 0))
+
+# Built-in functions
+print("abs(-5):", abs(-5))
+print("abs(3.14):", abs(3.14))
+print("min(3, 7):", min(3, 7))
+print("max(3, 7):", max(3, 7))
+
+nums = [5, 2, 8, 1, 9]
+print("sum:", sum(nums))
+print("sorted:", sorted(nums))
+print("reversed:", reversed(nums))
+
+# enumerate and zip
+names = ["Alice", "Bob", "Charlie"]
+for pair in enumerate(names):
+    print(pair)
+
+ages = [25, 30, 35]
+for pair in zip(names, ages):
+    print(pair)
+
+# chr, ord, hex
+print("chr(65):", chr(65))
+print("ord('A'):", ord("A"))
+print("hex(255):", hex(255))
+
+# slice
+print("slice([1,2,3,4,5], 1, 3):", slice([1, 2, 3, 4, 5], 1, 3))
+print("slice('hello', 1, 4):", slice("hello", 1, 4))
+
+# Functions
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+print("5! =", factorial(5))
+
+def fibonacci(n):
+    if n <= 0:
+        return 0
+    if n == 1:
+        return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+print("fib(10) =", fibonacci(10))
+
+print("=" * 30)
+print("All features working!")

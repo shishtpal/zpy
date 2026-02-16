@@ -1,0 +1,267 @@
+# ZPy Data Structures Examples
+# Working with lists, dictionaries, and nested structures
+
+print("=" * 50)
+print("       DATA STRUCTURES EXAMPLES")
+print("=" * 50)
+
+# ============================================
+# List Operations
+# ============================================
+print("\n--- List Operations ---")
+
+# Creating lists
+empty_list = []
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "hello", 3.14, true, none]
+
+print("Empty list:", empty_list)
+print("Numbers:", numbers)
+print("Mixed types:", mixed)
+
+# Accessing elements
+print("First element:", numbers[0])
+print("Last element:", numbers[-1])
+print("Second to last:", numbers[-2])
+
+# Modifying lists
+numbers.append(6)
+print("After append(6):", numbers)
+
+numbers.insert(0, 0)
+print("After insert(0, 0):", numbers)
+
+popped = numbers.pop()
+print("Popped:", popped, "List:", numbers)
+
+popped_at = numbers.pop(2)
+print("Popped at index 2:", popped_at, "List:", numbers)
+
+# List methods
+nums = [3, 1, 4, 1, 5, 9, 2, 6]
+print("\nOriginal:", nums)
+print("Index of 4:", nums.index(4))
+print("Count of 1:", nums.count(1))
+
+nums.reverse()
+print("Reversed:", nums)
+
+# List copying
+copy = nums.copy()
+copy.append(999)
+print("Original after copy modified:", nums)
+print("Copy:", copy)
+
+# List extend
+a = [1, 2, 3]
+b = [4, 5, 6]
+a.extend(b)
+print("Extended list:", a)
+
+# ============================================
+# Dictionary Operations
+# ============================================
+print("\n--- Dictionary Operations ---")
+
+# Creating dictionaries
+empty_dict = {}
+person = {"name": "Alice", "age": 30, "city": "NYC"}
+scores = {"math": 95, "english": 88, "science": 92}
+
+print("Empty dict:", empty_dict)
+print("Person:", person)
+print("Scores:", scores)
+
+# Accessing values
+print("Name:", person["name"])
+print("Age:", person["age"])
+
+# Dictionary methods
+print("\nKeys:", person.keys())
+print("Values:", person.values())
+print("Items:", person.items())
+
+# Safe get with default
+print("Get city:", person.get("city"))
+print("Get country (default):", person.get("country", "Unknown"))
+
+# Modifying dictionaries
+person["email"] = "alice@example.com"
+print("After adding email:", person)
+
+# Dict update
+person.update({"age": 31, "country": "USA"})
+print("After update:", person)
+
+# Dict pop
+removed = scores.pop("english")
+print("Removed score:", removed, "Scores:", scores)
+
+# ============================================
+# Nested Structures
+# ============================================
+print("\n--- Nested Structures ---")
+
+# List of lists (2D array)
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+print("Matrix:")
+for row in matrix:
+    print(row)
+
+print("Element [1][2]:", matrix[1][2])
+
+# Sum of matrix
+total = 0
+for row in matrix:
+    for val in row:
+        total += val
+print("Matrix sum:", total)
+
+# List of dictionaries
+students = [
+    {"name": "Alice", "grade": "A", "score": 95},
+    {"name": "Bob", "grade": "B", "score": 85},
+    {"name": "Charlie", "grade": "A", "score": 92}
+]
+
+print("\nStudents:")
+for student in students:
+    print("  ", student["name"], "-", student["grade"], "(", student["score"], ")")
+
+# Dictionary with list values
+grades = {
+    "Alice": [90, 85, 92, 88],
+    "Bob": [78, 82, 80, 85],
+    "Charlie": [95, 98, 92, 97]
+}
+
+print("\nGrades by student:")
+for student in grades.keys():
+    avg = sum(grades[student]) / len(grades[student])
+    print("  ", student, ":", grades[student], "Avg:", avg)
+
+# ============================================
+# Stack Implementation (using list)
+# ============================================
+print("\n--- Stack (using list) ---")
+
+stack = []
+
+# Push
+stack.append(1)
+stack.append(2)
+stack.append(3)
+print("After pushes:", stack)
+
+# Pop
+top = stack.pop()
+print("Popped:", top, "Stack:", stack)
+
+# Peek (look at top without removing)
+if len(stack) > 0:
+    print("Top element:", stack[-1])
+
+# ============================================
+# Queue Implementation (using list)
+# ============================================
+print("\n--- Queue (using list) ---")
+
+queue = []
+
+# Enqueue
+queue.append("first")
+queue.append("second")
+queue.append("third")
+print("After enqueues:", queue)
+
+# Dequeue (remove from front)
+front = queue.pop(0)
+print("Dequeued:", front, "Queue:", queue)
+
+# ============================================
+# Counter (frequency count)
+# ============================================
+print("\n--- Frequency Counter ---")
+
+def count_frequency(items):
+    freq = {}
+    for item in items:
+        if item in freq.keys():
+            freq[item] += 1
+        else:
+            freq[item] = 1
+    return freq
+
+words = ["apple", "banana", "apple", "cherry", "banana", "apple"]
+print("Words:", words)
+print("Frequency:", count_frequency(words))
+
+# ============================================
+# Set Operations (using dict)
+# ============================================
+print("\n--- Set Operations (via dict) ---")
+
+def to_set(lst):
+    result = {}
+    for item in lst:
+        result[item] = true
+    return result
+
+def set_union(set1, set2):
+    result = {}
+    for key in set1.keys():
+        result[key] = true
+    for key in set2.keys():
+        result[key] = true
+    return keys(result)
+
+def set_intersection(set1, set2):
+    result = []
+    for key in set1.keys():
+        if key in set2.keys():
+            result.append(key)
+    return result
+
+a_set = to_set([1, 2, 3, 4])
+b_set = to_set([3, 4, 5, 6])
+print("Set A:", keys(a_set))
+print("Set B:", keys(b_set))
+print("Union:", set_union(a_set, b_set))
+print("Intersection:", set_intersection(a_set, b_set))
+
+# ============================================
+# Graph Representation
+# ============================================
+print("\n--- Graph (Adjacency List) ---")
+
+# Representing a simple graph
+graph = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "F"],
+    "D": ["B"],
+    "E": ["B", "F"],
+    "F": ["C", "E"]
+}
+
+print("Graph adjacency list:")
+for node in graph.keys():
+    print("  ", node, "->", graph[node])
+
+# Find all neighbors of a node
+def get_neighbors(g, node):
+    if node in g.keys():
+        return g[node]
+    return []
+
+print("Neighbors of B:", get_neighbors(graph, "B"))
+print("Neighbors of X:", get_neighbors(graph, "X"))
+
+print("\n" + "=" * 50)
+print("All data structure examples completed!")
+print("=" * 50)

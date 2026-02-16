@@ -1,0 +1,53 @@
+# HTTP Demo
+# Demonstrates HTTP client functionality
+# Note: Requires network access to run
+
+print("=== HTTP Demo ===\n")
+print("Note: These examples require network access.\n")
+
+# GET request example
+print("1. GET request (to httpbin.org):")
+response = http_get("https://httpbin.org/get")
+print("   Status:", response["status"])
+if response["status"] == 200:
+    data = json_parse(response["body"])
+    print("   Origin:", data["origin"])
+
+# POST request with custom headers
+print("\n2. POST request with headers:")
+post_data = json_stringify({"name": "Alice", "message": "Hello!"})
+headers = {"Content-Type": "application/json", "X-Custom": "test"}
+response = http_post("https://httpbin.org/post", post_data, headers)
+print("   Status:", response["status"])
+
+# Custom method
+print("\n3. Custom method (PUT):")
+put_data = json_stringify({"id": 1, "status": "updated"})
+response = http_request("PUT", "https://httpbin.org/put", put_data)
+print("   Status:", response["status"])
+
+# DELETE
+print("\n4. DELETE request:")
+response = http_delete("https://httpbin.org/delete")
+print("   Status:", response["status"])
+
+# Download example
+print("\n5. Download file:")
+url = "https://httpbin.org/robots.txt"
+path = __dir__ + "/downloaded.txt"
+success = http_download(url, path)
+if success:
+    print("   Downloaded to:", path)
+    content = file_read(path)
+    print("   Content preview:", content)
+    file_delete(path)
+
+# Error handling
+print("\n5. Error handling (404):")
+response = http_get("https://httpbin.org/status/404")
+if response["status"] == 404:
+    print("   Got expected 404 error")
+elif response["status"] == 0:
+    print("   Request failed:", response["error"])
+
+print("\n=== Done ===")

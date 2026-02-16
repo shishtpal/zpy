@@ -1,0 +1,282 @@
+# ZPy String Examples
+# Comprehensive string manipulation
+
+print("=" * 50)
+print("         STRING EXAMPLES")
+print("=" * 50)
+
+# ============================================
+# String Basics
+# ============================================
+print("\n--- String Basics ---")
+
+greeting = "Hello, World!"
+name = "ZPy"
+empty = ""
+
+print("Greeting:", greeting)
+print("Name:", name)
+print("Empty string:", empty)
+print("Length of greeting:", len(greeting))
+
+# ============================================
+# String Indexing
+# ============================================
+print("\n--- String Indexing ---")
+
+text = "ABCDEFGHIJ"
+print("Text:", text)
+print("First char (index 0):", text[0])
+print("Last char (index -1):", text[-1])
+print("Third char (index 2):", text[2])
+print("Second to last (index -2):", text[-2])
+
+# ============================================
+# String Iteration
+# ============================================
+print("\n--- String Iteration ---")
+
+word = "Python"
+print("Characters in 'Python':")
+for char in word:
+    print("  ", char)
+
+# ============================================
+# String Concatenation
+# ============================================
+print("\n--- String Concatenation ---")
+
+first = "Hello"
+second = "World"
+combined = first + " " + second + "!"
+print("Combined:", combined)
+
+# Building string in loop
+result = ""
+for i in range(5):
+    result = result + str(i)
+print("Built string:", result)
+
+# ============================================
+# String Multiplication
+# ============================================
+print("\n--- String Multiplication ---")
+
+print("'=' * 20:", "=" * 20)
+print("'ab' * 5:", "ab" * 5)
+print("3 * 'xyz':", 3 * "xyz")
+
+# Building patterns
+for i in range(1, 6):
+    print("*" * i)
+
+# ============================================
+# Case Conversion
+# ============================================
+print("\n--- Case Conversion ---")
+
+mixed = "Hello World"
+print("Original:", mixed)
+print("Upper:", mixed.upper())
+print("Lower:", mixed.lower())
+
+sentence = "tHiS iS wEiRd CaSe"
+print("Fixed:", sentence.lower())
+
+# ============================================
+# Trimming (strip)
+# ============================================
+print("\n--- Trimming ---")
+
+padded = "   lots of spaces   "
+print("Original: '" + padded + "'")
+print("Stripped: '" + padded.strip() + "'")
+print("Left strip: '" + padded.lstrip() + "'")
+print("Right strip: '" + padded.rstrip() + "'")
+
+# ============================================
+# Split and Join
+# ============================================
+print("\n--- Split and Join ---")
+
+csv = "apple,banana,cherry,date"
+print("CSV:", csv)
+parts = csv.split(",")
+print("Split by comma:", parts)
+
+sentence2 = "The quick brown fox"
+words = sentence2.split()
+print("Words:", words)
+
+# Join
+joined = "-".join(parts)
+print("Joined with '-':", joined)
+
+rejoined = " ".join(words)
+print("Rejoined:", rejoined)
+
+# ============================================
+# Find and Replace
+# ============================================
+print("\n--- Find and Replace ---")
+
+text2 = "Hello, World! Hello, Universe!"
+print("Text:", text2)
+print("Find 'World':", text2.find("World"))
+print("Find 'Hello':", text2.find("Hello"))
+print("Find 'Galaxy':", text2.find("Galaxy"))
+
+replaced = text2.replace("Hello", "Goodbye")
+print("Replace Hello->Goodbye:", replaced)
+
+# ============================================
+# Starts/Ends With
+# ============================================
+print("\n--- Starts/Ends With ---")
+
+filename = "document.txt"
+print("Filename:", filename)
+print("Starts with 'doc':", filename.startswith("doc"))
+print("Starts with 'file':", filename.startswith("file"))
+print("Ends with '.txt':", filename.endswith(".txt"))
+print("Ends with '.pdf':", filename.endswith(".pdf"))
+
+# Check file extensions
+files = ["image.png", "report.pdf", "data.txt", "script.py"]
+print("\nFile extensions:")
+for f in files:
+    if f.endswith(".txt"):
+        print("  ", f, "- Text file")
+    elif f.endswith(".pdf"):
+        print("  ", f, "- PDF file")
+    elif f.endswith(".png"):
+        print("  ", f, "- Image file")
+    else:
+        print("  ", f, "- Other")
+
+# ============================================
+# String Counting
+# ============================================
+print("\n--- String Counting ---")
+
+s = "banana"
+print("String:", s)
+print("Count 'a':", s.count("a"))
+print("Count 'na':", s.count("na"))
+print("Count 'x':", s.count("x"))
+
+# ============================================
+# Membership Testing
+# ============================================
+print("\n--- Membership Testing ---")
+
+quote = "To be or not to be"
+print("Quote:", quote)
+print("'be' in quote:", "be" in quote)
+print("'bee' in quote:", "bee" in quote)
+print("'xyz' not in quote:", "xyz" not in quote)
+
+# ============================================
+# String Slicing
+# ============================================
+print("\n--- String Slicing ---")
+
+alphabet = "ABCDEFGHIJ"
+print("Alphabet:", alphabet)
+print("slice(0, 5):", slice(alphabet, 0, 5))
+print("slice(2, 7):", slice(alphabet, 2, 7))
+print("slice(-5, -1):", slice(alphabet, -5, -1))
+print("slice(5, 100):", slice(alphabet, 5, 100))
+
+# ============================================
+# Character Operations
+# ============================================
+print("\n--- Character Operations ---")
+
+print("chr(65):", chr(65))
+print("chr(97):", chr(97))
+print("chr(48):", chr(48))
+
+print("ord('A'):", ord("A"))
+print("ord('a'):", ord("a"))
+print("ord('0'):", ord("0"))
+
+# Print ASCII letters
+print("\nASCII uppercase letters:")
+letters = ""
+for i in range(65, 91):
+    letters = letters + chr(i)
+print(letters)
+
+# ============================================
+# Escape Sequences
+# ============================================
+print("\n--- Escape Sequences ---")
+
+print("Tab:\tafter tab")
+print("Newline:")
+print("Line 1\nLine 2\nLine 3")
+print("Quote: \"Hello\"")
+print("Backslash: \\")
+
+# ============================================
+# String Comparison
+# ============================================
+print("\n--- String Comparison ---")
+
+a = "apple"
+b = "banana"
+c = "apple"
+
+print("a =", a, ", b =", b, ", c =", c)
+print("a == c:", a == c)
+print("a == b:", a == b)
+print("a != b:", a != b)
+print("a < b (lexicographic):", a < b)
+print("b > a:", b > a)
+
+# ============================================
+# Practical Examples
+# ============================================
+print("\n--- Practical Examples ---")
+
+# Email validation (simple)
+def is_valid_email(email):
+    if "@" not in email:
+        return false
+    if "." not in email:
+        return false
+    at_pos = email.find("@")
+    dot_pos = email.find(".")
+    if at_pos > dot_pos:
+        return false
+    return true
+
+emails = ["user@example.com", "invalid", "test@domain", "a@b.c"]
+for email in emails:
+    print("  ", email, "valid:", is_valid_email(email))
+
+# Word counter
+print("\nWord counting:")
+text3 = "the quick brown fox jumps over the lazy dog"
+word_list = text3.split()
+print("Text:", text3)
+print("Word count:", len(word_list))
+
+# Character frequency
+print("\nCharacter frequency in 'mississippi':")
+sample = "mississippi"
+def char_frequency(s):
+    freq = {}
+    for c in s:
+        if c in freq.keys():
+            freq[c] += 1
+        else:
+            freq[c] = 1
+    return freq
+
+print(char_frequency(sample))
+
+print("\n" + "=" * 50)
+print("All string examples completed!")
+print("=" * 50)

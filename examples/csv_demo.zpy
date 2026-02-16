@@ -1,0 +1,45 @@
+# CSV Demo
+# Demonstrates CSV parsing and serialization
+
+print("=== CSV Demo ===")
+print("")
+
+# Parse CSV with headers
+print("1. Parsing CSV with headers:")
+csv_text = "name,email,role\nAlice,alice@example.com,admin\nBob,bob@example.com,user"
+data = csv_parse(csv_text)
+print("   Parsed records:", len(data))
+for record in data:
+    print("   -", record["name"], "-", record["role"])
+
+# Parse CSV without headers
+print("")
+print("2. Parsing CSV without headers:")
+raw_csv = "a,b,c\n1,2,3\n4,5,6"
+rows = csv_parse(raw_csv, ",", false)
+print("   Rows:", rows)
+
+# Custom delimiter
+print("")
+print("3. Custom delimiter (semicolon):")
+semi_csv = "product;price\nWidget;9.99\nGadget;19.99"
+products = csv_parse(semi_csv, ";")
+for p in products:
+    print("   -", p["product"], "$" + p["price"])
+
+# Stringify from dicts
+print("")
+print("4. Stringify from dicts:")
+users = [{"id": "1", "name": "Alice"}, {"id": "2", "name": "Bob"}]
+csv_output = csv_stringify(users)
+print("   Generated CSV:")
+print(csv_output)
+
+# Stringify from lists
+print("5. Stringify from lists:")
+matrix = [["x", "y", "z"], ["1", "2", "3"]]
+matrix_csv = csv_stringify(matrix)
+print("   Generated CSV:")
+print(matrix_csv)
+
+print("=== Done ===")

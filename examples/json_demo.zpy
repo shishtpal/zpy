@@ -1,0 +1,43 @@
+# JSON Demo
+# Demonstrates JSON parsing and serialization
+
+print("=== JSON Demo ===")
+print("")
+
+# Parse JSON
+print("1. Parsing JSON:")
+data = json_parse('{"name": "Alice", "age": 30, "skills": ["Python", "Zig"]}')
+print("   Parsed data:", data)
+print("   Name:", data["name"])
+print("   Skills:", data["skills"])
+
+# Nested JSON
+print("")
+print("2. Nested JSON:")
+nested = json_parse('{"user": {"id": 1, "profile": {"name": "Bob", "active": true}}}')
+print("   User profile name:", nested["user"]["profile"]["name"])
+print("   Active:", nested["user"]["profile"]["active"])
+
+# Stringify
+print("")
+print("3. Stringifying:")
+obj = {"product": "Widget", "price": 29, "in_stock": true}
+result = json_stringify(obj)
+print("   Minified:", result)
+
+pretty = json_stringify(obj, 2)
+print("   Pretty printed:")
+print(pretty)
+
+# Round-trip
+print("")
+print("4. Round-trip test:")
+original = {"nested": {"array": [1, 2, 3]}, "flag": false}
+serialized = json_stringify(original)
+restored = json_parse(serialized)
+print("   Original:", original)
+print("   Serialized:", serialized)
+print("   Restored:", restored)
+
+print("")
+print("=== Done ===")

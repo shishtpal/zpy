@@ -1,0 +1,239 @@
+# ZPy Recursion Examples
+# Demonstrating recursive functions
+
+print("=" * 50)
+print("         RECURSION EXAMPLES")
+print("=" * 50)
+
+# ============================================
+# Factorial
+# ============================================
+print("\n--- Factorial ---")
+
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+for i in range(8):
+    print(i, "! =", factorial(i))
+
+# ============================================
+# Fibonacci Sequence
+# ============================================
+print("\n--- Fibonacci ---")
+
+def fib(n):
+    if n <= 0:
+        return 0
+    if n == 1:
+        return 1
+    return fib(n - 1) + fib(n - 2)
+
+print("First 12 Fibonacci numbers:")
+result = []
+for i in range(12):
+    result.append(fib(i))
+print(result)
+
+# ============================================
+# Sum of Array (recursive)
+# ============================================
+print("\n--- Recursive Sum ---")
+
+def sum_array(arr, index):
+    if index >= len(arr):
+        return 0
+    return arr[index] + sum_array(arr, index + 1)
+
+nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print("Array:", nums)
+print("Sum:", sum_array(nums, 0))
+
+# ============================================
+# Power Function
+# ============================================
+print("\n--- Power Function ---")
+
+def power(base, exp):
+    if exp == 0:
+        return 1
+    if exp < 0:
+        return 1.0 / power(base, -exp)
+    return base * power(base, exp - 1)
+
+print("2^0 =", power(2, 0))
+print("2^5 =", power(2, 5))
+print("2^10 =", power(2, 10))
+print("3^4 =", power(3, 4))
+
+# ============================================
+# Count Down
+# ============================================
+print("\n--- Countdown ---")
+
+def countdown(n):
+    if n <= 0:
+        print("Liftoff!")
+        return
+    print(n)
+    countdown(n - 1)
+
+countdown(5)
+
+# ============================================
+# Sum of Digits
+# ============================================
+print("\n--- Sum of Digits ---")
+
+def digit_sum(n):
+    if n < 10:
+        return n
+    return n % 10 + digit_sum(n / 10)
+
+print("Digit sum of 12345:", digit_sum(12345))
+print("Digit sum of 9999:", digit_sum(9999))
+print("Digit sum of 100:", digit_sum(100))
+
+# ============================================
+# GCD (Greatest Common Divisor)
+# ============================================
+print("\n--- GCD (Euclidean) ---")
+
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+print("GCD(48, 18) =", gcd(48, 18))
+print("GCD(56, 98) =", gcd(56, 98))
+print("GCD(100, 25) =", gcd(100, 25))
+
+# ============================================
+# String Reversal
+# ============================================
+print("\n--- String Reversal ---")
+
+def reverse_string(s):
+    if len(s) <= 1:
+        return s
+    return s[-1] + reverse_string(slice(s, 0, len(s) - 1))
+
+print("Reverse 'hello':", reverse_string("hello"))
+print("Reverse 'recursion':", reverse_string("recursion"))
+
+# ============================================
+# Palindrome Check
+# ============================================
+print("\n--- Palindrome Check ---")
+
+def is_palindrome(s):
+    if len(s) <= 1:
+        return true
+    if s[0] != s[-1]:
+        return false
+    return is_palindrome(slice(s, 1, len(s) - 1))
+
+print("'radar' is palindrome:", is_palindrome("radar"))
+print("'hello' is palindrome:", is_palindrome("hello"))
+print("'level' is palindrome:", is_palindrome("level"))
+print("'a' is palindrome:", is_palindrome("a"))
+
+# ============================================
+# Binary Search (recursive)
+# ============================================
+print("\n--- Binary Search (Recursive) ---")
+
+def binary_search_rec(arr, target, left, right):
+    if left > right:
+        return -1
+    mid = (left + right) / 2
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] < target:
+        return binary_search_rec(arr, target, mid + 1, right)
+    else:
+        return binary_search_rec(arr, target, left, mid - 1)
+
+sorted_arr = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
+print("Array:", sorted_arr)
+print("Find 23:", binary_search_rec(sorted_arr, 23, 0, len(sorted_arr) - 1))
+print("Find 100:", binary_search_rec(sorted_arr, 100, 0, len(sorted_arr) - 1))
+
+# ============================================
+# Flatten Nested List
+# ============================================
+print("\n--- Flatten List ---")
+
+def flatten(lst, result):
+    for item in lst:
+        if type(item) == "list":
+            flatten(item, result)
+        else:
+            result.append(item)
+    return result
+
+nested = [[1, 2], [3, [4, 5]], 6, [[7], 8, 9]]
+print("Nested:", nested)
+flat_result = []
+flatten(nested, flat_result)
+print("Flattened:", flat_result)
+
+# ============================================
+# Tower of Hanoi (prints moves)
+# ============================================
+print("\n--- Tower of Hanoi ---")
+
+def hanoi(n, source, auxiliary, target):
+    if n == 1:
+        print("Move disk 1 from", source, "to", target)
+        return
+    hanoi(n - 1, source, target, auxiliary)
+    print("Move disk", n, "from", source, "to", target)
+    hanoi(n - 1, auxiliary, source, target)
+
+print("Solving Tower of Hanoi for 3 disks:")
+hanoi(3, "A", "B", "C")
+
+# ============================================
+# List Length (recursive)
+# ============================================
+print("\n--- Recursive Length ---")
+
+def rec_length(lst, count):
+    if count >= len(lst):
+        return count
+    return rec_length(lst, count + 1)
+
+# Alternative approach using pop
+def length_via_iteration(lst):
+    if len(lst) == 0:
+        return 0
+    count = 0
+    for _ in lst:
+        count += 1
+    return count
+
+test_list = [10, 20, 30, 40, 50]
+print("List:", test_list)
+print("Length:", rec_length(test_list, 0))
+
+# ============================================
+# Maximum in List (recursive)
+# ============================================
+print("\n--- Recursive Maximum ---")
+
+def rec_max(arr, index, current_max):
+    if index >= len(arr):
+        return current_max
+    if arr[index] > current_max:
+        current_max = arr[index]
+    return rec_max(arr, index + 1, current_max)
+
+values = [3, 7, 2, 9, 4, 1, 8, 5]
+print("List:", values)
+print("Maximum:", rec_max(values, 0, values[0]))
+
+print("\n" + "=" * 50)
+print("All recursion examples completed!")
+print("=" * 50)

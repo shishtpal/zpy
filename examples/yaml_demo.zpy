@@ -1,0 +1,48 @@
+# YAML Demo
+# Demonstrates YAML parsing and serialization
+
+print("=== YAML Demo ===\n")
+
+# Basic YAML
+print("1. Basic YAML parsing:")
+yaml_text = "name: Alice\nage: 30\nactive: true"
+data = yaml_parse(yaml_text)
+print("   Name:", data["name"])
+print("   Age:", data["age"])
+print("   Active:", data["active"])
+
+# Nested YAML
+print("\n2. Nested structures:")
+nested_yaml = "server:\n  host: localhost\n  port: 8080"
+config = yaml_parse(nested_yaml)
+print("   Host:", config["server"]["host"])
+print("   Port:", config["server"]["port"])
+
+# Lists in YAML
+print("\n3. Lists:")
+list_yaml = "languages:\n  - Python\n  - Zig\n  - Go"
+langs = yaml_parse(list_yaml)
+print("   Languages:", langs["languages"])
+
+# Simple list
+print("\n4. Simple list:")
+items_yaml = "- apple\n- banana\n- cherry"
+items = yaml_parse(items_yaml)
+print("   Items:", items)
+
+# Multi-document
+print("\n5. Multi-document YAML:")
+multi_yaml = "---\nenv: development\n---\nenv: production"
+docs = yaml_parse_all(multi_yaml)
+print("   Document count:", len(docs))
+for i in range(len(docs)):
+    print("   Doc", i + 1, ":", docs[i])
+
+# Stringify
+print("\n6. Stringify:")
+obj = {"app": "MyApp", "version": "1.0.0"}
+yaml_output = yaml_stringify(obj)
+print("   Generated YAML:")
+print(yaml_output)
+
+print("\n=== Done ===")

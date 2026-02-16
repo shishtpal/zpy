@@ -1,0 +1,270 @@
+# ZPy Math Examples
+# Mathematical operations and algorithms
+
+print("=" * 50)
+print("         MATH EXAMPLES")
+print("=" * 50)
+
+# ============================================
+# Basic Arithmetic
+# ============================================
+print("\n--- Basic Arithmetic ---")
+
+a = 17
+b = 5
+
+print("a =", a, ", b =", b)
+print("a + b =", a + b)
+print("a - b =", a - b)
+print("a * b =", a * b)
+print("a / b =", a / b)  # integer division
+print("a % b =", a % b)
+
+# Floating point
+x = 17.0
+y = 5.0
+print("\nx =", x, ", y =", y)
+print("x / y =", x / y)
+
+# ============================================
+# Absolute Value
+# ============================================
+print("\n--- Absolute Value ---")
+
+print("abs(-10) =", abs(-10))
+print("abs(10) =", abs(10))
+print("abs(-3.14) =", abs(-3.14))
+
+# ============================================
+# Min and Max
+# ============================================
+print("\n--- Min and Max ---")
+
+print("min(5, 3) =", min(5, 3))
+print("max(5, 3) =", max(5, 3))
+
+nums = [7, 2, 9, 1, 8, 4, 3]
+print("List:", nums)
+print("min(list) =", min(nums))
+print("max(list) =", max(nums))
+
+# ============================================
+# Sum
+# ============================================
+print("\n--- Sum ---")
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print("Numbers 1-10:", numbers)
+print("Sum =", sum(numbers))
+
+# Sum formula: n(n+1)/2
+n = 10
+print("Formula n(n+1)/2 =", n * (n + 1) / 2)
+
+# ============================================
+# Prime Numbers
+# ============================================
+print("\n--- Prime Numbers ---")
+
+def is_prime(n):
+    if n < 2:
+        return false
+    if n == 2:
+        return true
+    if n % 2 == 0:
+        return false
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return false
+        i += 2
+    return true
+
+print("Prime check:")
+for num in [2, 3, 4, 5, 13, 17, 20, 23, 29, 30]:
+    print("  ", num, "is prime:", is_prime(num))
+
+# Find primes up to n
+def sieve_primes(limit):
+    primes = []
+    for n in range(2, limit + 1):
+        if is_prime(n):
+            primes.append(n)
+    return primes
+
+print("\nPrimes up to 50:", sieve_primes(50))
+
+# ============================================
+# Perfect Numbers
+# ============================================
+print("\n--- Perfect Numbers ---")
+
+def divisor_sum(n):
+    total = 0
+    for i in range(1, n):
+        if n % i == 0:
+            total += i
+    return total
+
+def is_perfect(n):
+    return divisor_sum(n) == n
+
+print("Perfect numbers up to 100:")
+for num in range(1, 101):
+    if is_perfect(num):
+        print("  ", num, "(divisors sum to", divisor_sum(num), ")")
+
+# ============================================
+# Number Properties
+# ============================================
+print("\n--- Number Properties ---")
+
+def is_even(n):
+    return n % 2 == 0
+
+def is_odd(n):
+    return n % 2 != 0
+
+for num in range(10):
+    print("  ", num, "- even:", is_even(num), ", odd:", is_odd(num))
+
+# ============================================
+# Power/Exponentiation
+# ============================================
+print("\n--- Powers ---")
+
+def power(base, exp):
+    result = 1
+    for i in range(exp):
+        result *= base
+    return result
+
+print("2^8 =", power(2, 8))
+print("3^5 =", power(3, 5))
+print("10^3 =", power(10, 3))
+
+# Powers of 2
+print("\nPowers of 2:")
+for i in range(11):
+    print("  2^", i, "=", power(2, i))
+
+# ============================================
+# Square Root (Newton's method)
+# ============================================
+print("\n--- Square Root (Newton's Method) ---")
+
+def sqrt(n):
+    if n < 0:
+        return none
+    if n == 0:
+        return 0.0
+    guess = float(n) / 2.0
+    for i in range(20):  # 20 iterations
+        guess = (guess + float(n) / guess) / 2.0
+    return guess
+
+print("sqrt(4) =", sqrt(4))
+print("sqrt(9) =", sqrt(9))
+print("sqrt(2) =", sqrt(2))
+print("sqrt(100) =", sqrt(100))
+print("sqrt(2025) =", sqrt(2025))
+
+# ============================================
+# Triangular Numbers
+# ============================================
+print("\n--- Triangular Numbers ---")
+
+def triangular(n):
+    return n * (n + 1) / 2
+
+print("First 10 triangular numbers:")
+tris = []
+for i in range(1, 11):
+    tris.append(triangular(i))
+print(tris)
+
+# ============================================
+# Collatz Conjecture
+# ============================================
+print("\n--- Collatz Sequence ---")
+
+def collatz_sequence(n):
+    seq = [n]
+    while n != 1:
+        if n % 2 == 0:
+            n = n / 2
+        else:
+            n = 3 * n + 1
+        seq.append(n)
+    return seq
+
+print("Collatz(7):", collatz_sequence(7))
+print("Collatz(27) length:", len(collatz_sequence(27)))
+
+# ============================================
+# Pascals Triangle
+# ============================================
+print("\n--- Pascal's Triangle ---")
+
+def pascals_row(n):
+    row = [1]
+    for i in range(n):
+        row.append(row[i] * (n - i) / (i + 1))
+    return row
+
+print("Pascal's Triangle (first 7 rows):")
+for i in range(7):
+    print(pascals_row(i))
+
+# ============================================
+# Arithmetic Sequences
+# ============================================
+print("\n--- Arithmetic Sequence ---")
+
+def arithmetic_seq(first, diff, count):
+    seq = []
+    for i in range(count):
+        seq.append(first + i * diff)
+    return seq
+
+print("Start=2, diff=3, 10 terms:", arithmetic_seq(2, 3, 10))
+
+def arithmetic_sum(first, diff, count):
+    # Sum = n/2 * (2a + (n-1)d)
+    return count * (2 * first + (count - 1) * diff) / 2
+
+print("Sum:", arithmetic_sum(2, 3, 10))
+
+# ============================================
+# Geometric Sequences
+# ============================================
+print("\n--- Geometric Sequence ---")
+
+def geometric_seq(first, ratio, count):
+    seq = []
+    current = first
+    for i in range(count):
+        seq.append(current)
+        current *= ratio
+    return seq
+
+print("Start=1, ratio=2, 10 terms:", geometric_seq(1, 2, 10))
+
+# ============================================
+# Statistical Mean
+# ============================================
+print("\n--- Statistics ---")
+
+def mean(arr):
+    return sum(arr) / len(arr)
+
+data = [23, 45, 67, 12, 89, 34, 56, 78, 90, 11]
+print("Data:", data)
+print("Mean:", mean(data))
+print("Min:", min(data))
+print("Max:", max(data))
+print("Range:", max(data) - min(data))
+
+print("\n" + "=" * 50)
+print("All math examples completed!")
+print("=" * 50)

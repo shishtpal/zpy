@@ -1,0 +1,44 @@
+# Test del keyword and delete function
+
+print("=== List Operations ===")
+items = [1, 2, 3, 4, 5]
+print("Original:", items)
+
+# Using del keyword
+del items[2]
+print("After del items[2]:", items)
+
+# Using delete function
+delete(items, 0)
+print("After delete(items, 0):", items)
+
+# Using pop method
+val = items.pop()
+print("After pop():", items, "(removed:", val, ")")
+
+# Using remove method
+items.remove(2)
+print("After remove(2):", items)
+
+print("\n=== Dict Operations ===")
+data = {"a": 1, "b": 2, "c": 3, "d": 4}
+print("Original:", data)
+
+# Using del keyword
+del data["b"]
+print("After del data['b']:", data)
+
+# Using delete function
+delete(data, "d")
+print("After delete(data, 'd'):", data)
+
+# Using pop method
+val = data.pop("a")
+print("After pop('a'):", data, "(removed:", val, ")")
+
+print("\n=== Pass statement ===")
+def placeholder():
+    pass
+
+placeholder()
+print("pass statement works!")

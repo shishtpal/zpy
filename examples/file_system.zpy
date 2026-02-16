@@ -1,0 +1,18 @@
+# File System Example
+# Use __dir__ to get the script's directory
+
+print("Script file:", __file__)
+print("Script dir:", __dir__)
+
+# Read a file relative to the script's location
+content = file_read(__dir__ + "/data.txt")
+if content:
+    print("File content:", content)
+else:
+    print("File not found or empty")
+
+# List files in the script's directory
+files = dir_list(__dir__)
+print("Files in script directory:")
+for f in files:
+    print("  -", f)
