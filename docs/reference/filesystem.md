@@ -2,6 +2,8 @@
 
 ZPy provides built-in functions for file system operations.
 
+> **Note:** For additional OS utilities (working directory, path operations, environment variables, etc.), see [OS Module](/reference/os).
+
 ## Special Variables
 
 ### `__file__`
