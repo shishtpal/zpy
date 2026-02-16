@@ -5,6 +5,10 @@ export default defineConfig({
   description: 'A Python-like language interpreter written in Zig',
   lang: 'en-US',
 
+  // Base URL for GitHub Pages deployment
+  // Change 'zpy' to your repo name if different
+  base: '/zpy/',
+
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }]
   ],
