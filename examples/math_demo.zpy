@@ -1,0 +1,215 @@
+# ZPy Math Module Demo
+# Demonstrates the math module functions
+
+print("=" * 50)
+print("         MATH MODULE DEMO")
+print("=" * 50)
+
+# ============================================
+# Constants
+# ============================================
+print("\n--- Constants ---")
+
+print("pi =", math_pi())
+print("e =", math_e())
+print("tau =", math_tau())
+print("inf =", math_inf())
+print("nan =", math_nan())
+
+# ============================================
+# Power and Logarithmic Functions
+# ============================================
+print("\n--- Power and Logarithmic ---")
+
+print("sqrt(16) =", math_sqrt(16))
+print("sqrt(2) =", math_sqrt(2))
+print("cbrt(27) =", math_cbrt(27))
+print("cbrt(8) =", math_cbrt(8))
+
+print("\nUsing ** operator for power:")
+print("2 ** 10 =", 2 ** 10)
+print("3 ** 5 =", 3 ** 5)
+print("4 ** 0.5 =", 4 ** 0.5)
+
+print("\nExponential and logarithm:")
+print("exp(1) =", math_exp(1))
+print("exp(0) =", math_exp(0))
+print("log(e) =", math_log(math_e()))
+print("log(1) =", math_log(1))
+print("log2(8) =", math_log2(8))
+print("log2(1024) =", math_log2(1024))
+print("log10(100) =", math_log10(100))
+print("log10(1000000) =", math_log10(1000000))
+
+# ============================================
+# Trigonometric Functions
+# ============================================
+print("\n--- Trigonometric Functions ---")
+
+print("Using radians:")
+print("sin(0) =", math_sin(0))
+print("sin(pi/2) =", math_sin(math_pi() / 2))
+print("cos(0) =", math_cos(0))
+print("cos(pi) =", math_cos(math_pi()))
+print("tan(0) =", math_tan(0))
+print("tan(pi/4) =", math_tan(math_pi() / 4))
+
+print("\nInverse trigonometric:")
+print("asin(1) =", math_asin(1), "(pi/2)")
+print("acos(0) =", math_acos(0), "(pi/2)")
+print("atan(1) =", math_atan(1), "(pi/4)")
+print("atan2(1, 1) =", math_atan2(1, 1), "(pi/4)")
+print("atan2(1, 0) =", math_atan2(1, 0), "(pi/2)")
+
+# Helper: degrees to radians
+def deg_to_rad(degrees):
+    return degrees * math_pi() / 180
+
+# Helper: radians to degrees
+def rad_to_deg(radians):
+    return radians * 180 / math_pi()
+
+print("\nUsing degrees:")
+print("sin(90 deg) =", math_sin(deg_to_rad(90)))
+print("cos(60 deg) =", math_cos(deg_to_rad(60)))
+print("cos(180 deg) =", math_cos(deg_to_rad(180)))
+
+# ============================================
+# Hyperbolic Functions
+# ============================================
+print("\n--- Hyperbolic Functions ---")
+
+print("sinh(0) =", math_sinh(0))
+print("cosh(0) =", math_cosh(0))
+print("tanh(0) =", math_tanh(0))
+print("sinh(1) =", math_sinh(1))
+print("cosh(1) =", math_cosh(1))
+print("tanh(1) =", math_tanh(1))
+
+# ============================================
+# Rounding Functions
+# ============================================
+print("\n--- Rounding Functions ---")
+
+values = [3.14, 3.5, 3.7, -3.2, -3.5, -3.7]
+for v in values:
+    print("x =", v, "| floor =", math_floor(v), "ceil =", math_ceil(v), "round =", math_round(v), "trunc =", math_trunc(v))
+
+# ============================================
+# Utility Functions
+# ============================================
+print("\n--- Utility Functions ---")
+
+print("fabs(-5) =", math_fabs(-5))
+print("fabs(-3.14) =", math_fabs(-3.14))
+print("fabs(5) =", math_fabs(5))
+
+print("\nfmod(10, 3) =", math_fmod(10, 3))
+print("fmod(7.5, 2.5) =", math_fmod(7.5, 2.5))
+print("fmod(-7, 3) =", math_fmod(-7, 3))
+
+print("\nhypot(3, 4) =", math_hypot(3, 4))
+print("hypot(5, 12) =", math_hypot(5, 12))
+print("hypot(8, 15) =", math_hypot(8, 15))
+
+print("\ncopysign(5, -1) =", math_copysign(5, -1))
+print("copysign(-5, 1) =", math_copysign(-5, 1))
+print("copysign(3, -0.0) =", math_copysign(3, -0.0))
+
+print("\nmodf(3.14) =", math_modf(3.14))
+print("modf(-2.7) =", math_modf(-2.7))
+
+# ============================================
+# Practical Examples
+# ============================================
+print("\n--- Practical Examples ---")
+
+# Distance between two points
+def distance(x1, y1, x2, y2):
+    return math_hypot(x2 - x1, y2 - y1)
+
+print("Distance (0,0) to (3,4):", distance(0, 0, 3, 4))
+print("Distance (1,1) to (4,5):", distance(1, 1, 4, 5))
+
+# Circle calculations
+def circle_area(radius):
+    return math_pi() * radius ** 2
+
+def circle_circumference(radius):
+    return 2 * math_pi() * radius
+
+print("\nCircle (radius=5):")
+print("  Area:", circle_area(5))
+print("  Circumference:", circle_circumference(5))
+
+# Pythagorean theorem
+def is_right_triangle(a, b, c):
+    # Check if a^2 + b^2 = c^2
+    return math_fabs(a ** 2 + b ** 2 - c ** 2) < 0.0001
+
+print("\nRight triangle check:")
+print("  (3, 4, 5):", is_right_triangle(3, 4, 5))
+print("  (5, 12, 13):", is_right_triangle(5, 12, 13))
+print("  (1, 2, 3):", is_right_triangle(1, 2, 3))
+
+# Logarithm base conversion
+def log_base(x, base):
+    return math_log(x) / math_log(base)
+
+print("\nCustom base logarithms:")
+print("log_2(8) =", log_base(8, 2))
+print("log_3(27) =", log_base(27, 3))
+print("log_5(125) =", log_base(125, 5))
+
+# Compound interest
+def compound_interest(principal, rate, years):
+    return principal * (1 + rate) ** years
+
+print("\nCompound interest ($1000 at 5% for 10 years):")
+print("  Final amount:", compound_interest(1000, 0.05, 10))
+
+# Quadratic formula
+def quadratic_roots(a, b, c):
+    discriminant = b ** 2 - 4 * a * c
+    if discriminant < 0:
+        return none
+    sqrt_disc = math_sqrt(discriminant)
+    root1 = (-b + sqrt_disc) / (2 * a)
+    root2 = (-b - sqrt_disc) / (2 * a)
+    return [root1, root2]
+
+print("\nQuadratic formula (x^2 - 5x + 6 = 0):")
+roots = quadratic_roots(1, -5, 6)
+print("  Roots:", roots)
+
+# ============================================
+# Physics Calculations
+# ============================================
+print("\n--- Physics Calculations ---")
+
+# Projectile motion (ignoring air resistance)
+def projectile_range(velocity, angle_deg):
+    g = 9.81
+    angle_rad = deg_to_rad(angle_deg)
+    return velocity ** 2 * math_sin(2 * angle_rad) / g
+
+def projectile_max_height(velocity, angle_deg):
+    g = 9.81
+    angle_rad = deg_to_rad(angle_deg)
+    return (velocity * math_sin(angle_rad)) ** 2 / (2 * g)
+
+print("Projectile (v=50 m/s, angle=45 deg):")
+print("  Range:", projectile_range(50, 45), "meters")
+print("  Max height:", projectile_max_height(50, 45), "meters")
+
+# Simple pendulum period
+def pendulum_period(length):
+    g = 9.81
+    return 2 * math_pi() * math_sqrt(length / g)
+
+print("\nPendulum (length=1m):")
+print("  Period:", pendulum_period(1), "seconds")
+
+print("\n" + "=" * 50)
+print("Math module demo completed!")
+print("=" * 50)

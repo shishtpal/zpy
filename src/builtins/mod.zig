@@ -21,5 +21,6 @@ pub const callStringMethod = @import("string_methods.zig").callStringMethod;
 pub const callListMethod = @import("list_methods.zig").callListMethod;
 pub const callDictMethod = @import("dict_methods.zig").callDictMethod;
 
-// Re-export os_methods for direct access if needed
+// Re-export module functions for direct access if needed
 pub const getOsBuiltin = @import("os_methods.zig").getOsBuiltin;
+pub const getMathBuiltin = @import("math_methods.zig").getMathBuiltin;

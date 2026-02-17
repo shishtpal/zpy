@@ -53,6 +53,7 @@ export default defineConfig({
             { text: 'Built-in Functions', link: '/reference/builtins' },
             { text: 'File System', link: '/reference/filesystem' },
             { text: 'OS Module', link: '/reference/os' },
+            { text: 'Math Module', link: '/reference/math' },
             { text: 'JSON', link: '/reference/json' },
             { text: 'CSV', link: '/reference/csv' },
             { text: 'YAML', link: '/reference/yaml' },

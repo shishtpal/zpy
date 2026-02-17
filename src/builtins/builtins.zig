@@ -8,6 +8,7 @@ const csv_methods = @import("csv_methods.zig");
 const yaml_methods = @import("yaml_methods.zig");
 const http_methods = @import("http_methods.zig");
 const os_methods = @import("os_methods.zig");
+const math_methods = @import("math_methods.zig");
 
 pub const BuiltinError = error{
     WrongArgCount,
@@ -46,6 +47,11 @@ pub fn getBuiltin(name: []const u8) ?BuiltinFn {
 
     // Check OS built-ins
     if (os_methods.getOsBuiltin(name)) |fn_ptr| {
+        return @ptrCast(fn_ptr);
+    }
+
+    // Check math built-ins
+    if (math_methods.getMathBuiltin(name)) |fn_ptr| {
         return @ptrCast(fn_ptr);
     }
 
