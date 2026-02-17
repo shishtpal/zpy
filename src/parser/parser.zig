@@ -472,16 +472,37 @@ pub const Parser = struct {
         return left;
     }
 
+    /// Parse power operator (**) - right-associative
+    /// -2 ** 2 = -(2 ** 2) = -4 (unary minus binds looser than ** on left)
+    /// 2 ** -1 = 2 ** (-1) = 0.5 (unary minus binds tighter on right)
+    fn parsePower(self: *Parser) ParseError!*Expr {
+        // Left operand: just postfix/primary (no unary)
+        var left = try self.parsePostfix();
+
+        if (self.peek().type == .star_star) {
+            const op = self.advance();
+            // Right operand: include unary for cases like 2 ** -1
+            const right = try self.parseUnary();
+            left = try self.createExpr(.{ .binary = .{
+                .left = left,
+                .op = op,
+                .right = right,
+            } });
+        }
+        return left;
+    }
+
     fn parseUnary(self: *Parser) ParseError!*Expr {
         if (self.peek().type == .minus) {
             const op = self.advance();
-            const operand = try self.parseUnary();
+            // Unary minus applies to power (so -2 ** 2 = -(2 ** 2))
+            const operand = try self.parsePower();
             return self.createExpr(.{ .unary = .{
                 .op = op,
                 .operand = operand,
             } });
         }
-        return self.parsePostfix();
+        return self.parsePower();
     }
 
     fn parsePostfix(self: *Parser) ParseError!*Expr {

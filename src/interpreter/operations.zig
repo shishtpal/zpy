@@ -139,6 +139,39 @@ pub fn modulo(left: Value, right: Value) RuntimeError!Value {
     return RuntimeError.TypeError;
 }
 
+/// Computes power (exponentiation) of two values.
+///
+/// Supported types:
+/// - integer ** integer = integer (for non-negative exponents)
+/// - integer ** integer = float (for negative exponents)
+/// - float ** float = float (or mixed int/float)
+///
+/// Returns TypeError for incompatible types.
+pub fn power(left: Value, right: Value) RuntimeError!Value {
+    if (left == .integer and right == .integer) {
+        const base = left.integer;
+        const exp = right.integer;
+
+        // Handle negative exponents -> float result
+        if (exp < 0) {
+            const base_f: f64 = @floatFromInt(base);
+            const exp_f: f64 = @floatFromInt(exp);
+            return .{ .float = std.math.pow(f64, base_f, exp_f) };
+        }
+
+        // Non-negative exponents -> integer result
+        // std.math.powi returns error on overflow
+        const result = std.math.powi(i64, base, exp) catch return RuntimeError.Overflow;
+        return .{ .integer = result };
+    }
+    if (left == .float or right == .float) {
+        const l = toFloat(left) orelse return RuntimeError.TypeError;
+        const r = toFloat(right) orelse return RuntimeError.TypeError;
+        return .{ .float = std.math.pow(f64, l, r) };
+    }
+    return RuntimeError.TypeError;
+}
+
 /// Compares two values.
 ///
 /// Supported types:

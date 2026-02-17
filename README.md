@@ -20,10 +20,10 @@ A simple Python-like interpreter written in Zig.
 - `break` / `continue` statements
 
 ### Operators
-- Arithmetic: `+`, `-`, `*`, `/`, `%`
+- Arithmetic: `+`, `-`, `*`, `/`, `%`, `**` (power)
 - Comparison: `==`, `!=`, `<`, `>`, `<=`, `>=`
 - Logical: `and`, `or`, `not`
-- Assignment: `=`
+- Assignment: `=`, `+=`, `-=`, `*=`, `/=`, `%=`
 - Indexing: `list[0]`, `dict["key"]`
 
 ### Built-in Functions
@@ -32,8 +32,29 @@ A simple Python-like interpreter written in Zig.
 - `int(value)`, `float(value)`, `str(value)`, `bool(value)` - type conversion
 - `range(start, end)` - generate number sequence
 - `append(list, value)` - add to list
+- `delete(list, index)`, `delete(dict, key)` - remove items
 - `keys(dict)`, `values(dict)` - dict operations
 - `type(value)` - get type name
+
+### File System
+- `file_read(path)`, `file_write(path, content)`, `file_append(path, content)`
+- `file_delete(path)`, `file_exists(path)`
+- `dir_list(path)`, `dir_create(path)`, `dir_exists(path)`
+
+### OS Module
+- Working directory: `os_getcwd()`, `os_chdir(path)`
+- File ops: `os_rename()`, `os_copy()`, `os_stat()`, `os_remove()`
+- Directory ops: `os_mkdir()`, `os_rmdir()`, `os_walk()`
+- Path ops: `os_path_join()`, `os_path_exists()`, `os_path_isdir()`, etc.
+- Environment: `os_getenv()`, `os_setenv()`, `os_environ()`
+
+### Data Formats
+- JSON: `json_parse()`, `json_stringify()`
+- CSV: `csv_parse()`, `csv_stringify()`
+- YAML: `yaml_parse()`, `yaml_stringify()`
+
+### HTTP Client
+- `http_get(url)`, `http_post(url, body)`, `http_request(url, options)`
 
 ## Building
 
@@ -62,6 +83,9 @@ zig build run
 name = "ZPy"
 count = 10
 
+# Power operator
+print(2 ** 10)  # 1024
+
 # Lists
 numbers = [1, 2, 3, 4, 5]
 print("Numbers:", numbers)
@@ -83,6 +107,15 @@ while true:
     if i > 3:
         break
     print(i)
+
+# File operations
+file_write("test.txt", "Hello, World!")
+content = file_read("test.txt")
+print(content)
+
+# HTTP request
+response = http_get("https://api.github.com")
+print(response)
 ```
 
 ## Architecture

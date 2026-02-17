@@ -258,6 +258,10 @@ pub const Lexer = struct {
                 break :blk .minus;
             },
             '*' => blk: {
+                if (!self.isAtEnd() and self.peek() == '*') {
+                    self.advance();
+                    break :blk .star_star;
+                }
                 if (!self.isAtEnd() and self.peek() == '=') {
                     self.advance();
                     break :blk .star_eq;

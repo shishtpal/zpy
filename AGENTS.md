@@ -7,9 +7,13 @@
 ZPy is a Python-like language interpreter written in Zig. It supports:
 - Data types: int, float, string, bool, none, list, dict, function
 - Control flow: if/elif/else, while, for-in, break, continue, return
-- Operators: arithmetic, comparison, logical, assignment
+- Operators: arithmetic (+, -, *, /, %, **), comparison, logical, assignment
 - User-defined functions with recursion
 - Built-in functions and methods
+- File system operations
+- OS utilities (path, environment, directory walking)
+- Data formats: JSON, CSV, YAML
+- HTTP client
 
 ## Architecture
 
@@ -51,7 +55,13 @@ src/
 │   ├── builtins.zig      # Built-in functions (print, len, range, etc.)
 │   ├── string_methods.zig # String method implementations
 │   ├── list_methods.zig  # List method implementations
-│   └── dict_methods.zig  # Dict method implementations
+│   ├── dict_methods.zig  # Dict method implementations
+│   ├── file_methods.zig  # File system operations
+│   ├── json_methods.zig  # JSON parsing/stringifying
+│   ├── csv_methods.zig   # CSV parsing/stringifying
+│   ├── yaml_methods.zig  # YAML parsing/stringifying
+│   ├── http_methods.zig  # HTTP client
+│   └── os_methods.zig    # OS utilities
 │
 └── utils/
     ├── mod.zig           # Public interface

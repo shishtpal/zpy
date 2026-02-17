@@ -270,6 +270,7 @@ pub const Interpreter = struct {
             .plus => ops.add(self.allocator, left, right),
             .minus => ops.subtract(left, right),
             .star => ops.multiply(self.allocator, left, right),
+            .star_star => ops.power(left, right),
             .slash => ops.divide(left, right),
             .percent => ops.modulo(left, right),
             .eq_eq => .{ .boolean = valuesEqual(left, right) },

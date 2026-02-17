@@ -1,0 +1,18 @@
+# Test power operator
+print("Basic tests:")
+print("2 ** 3 =", 2 ** 3)
+print("2.0 ** 3 =", 2.0 ** 3)
+print("4 ** 0.5 =", 4 ** 0.5)
+
+print("\nRight-associative:")
+print("2 ** 3 ** 2 =", 2 ** 3 ** 2)
+
+print("\nPrecedence:")
+print("-2 ** 2 =", -2 ** 2)
+print("2 * 3 ** 2 =", 2 * 3 ** 2)
+print("2 ** 3 * 2 =", 2 ** 3 * 2)
+
+print("\nEdge cases:")
+print("0 ** 0 =", 0 ** 0)
+print("2 ** 0 =", 2 ** 0)
+print("2 ** -1 =", 2 ** -1)

@@ -16,6 +16,7 @@ pub const RuntimeError = error{
     ContinueOutsideLoop,
     UnsupportedOperation,
     OutOfMemory,
+    Overflow,
     BuiltinError,
 };
 
@@ -56,6 +57,7 @@ pub fn runtimeErrorMessage(err: anyerror) []const u8 {
         RuntimeError.ContinueOutsideLoop => "Continue statement outside of loop",
         RuntimeError.UnsupportedOperation => "Unsupported operation",
         RuntimeError.OutOfMemory => "Out of memory",
+        RuntimeError.Overflow => "Integer overflow",
         RuntimeError.BuiltinError => "Error in built-in function",
         else => "Unknown runtime error",
     };

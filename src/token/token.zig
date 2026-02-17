@@ -31,6 +31,7 @@ pub const TokenType = enum {
     plus, // +
     minus, // -
     star, // *
+    star_star, // **
     slash, // /
     percent, // %
     eq, // =
