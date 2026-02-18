@@ -58,6 +58,8 @@ export default defineConfig({
             { text: 'CSV', link: '/reference/csv' },
             { text: 'YAML', link: '/reference/yaml' },
             { text: 'HTTP', link: '/reference/http' },
+            { text: 'Subprocess', link: '/reference/subprocess' },
+            { text: 'Multiprocessing', link: '/reference/multiprocessing' },
             { text: 'CLI Reference', link: '/reference/cli' }
           ]
         }
