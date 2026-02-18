@@ -1,0 +1,25 @@
+print("=== Multiprocessing Module Demo ===")
+
+print("CPU count:", mp_cpu_count())
+
+print("\n--- mp_run_code: run inline code in subprocess ---")
+result = mp_run_code("print(2 + 3)")
+print("ok:", result["ok"])
+print("exit_code:", result["exit_code"])
+print("output:", result["output"])
+
+print("\n--- mp_run_code: compute in subprocess ---")
+result = mp_run_code("x = 10 * 10\nprint(x)")
+print("output:", result["output"])
+
+print("\n--- mp_run_code: error handling ---")
+result = mp_run_code("x = 1 / 0")
+print("ok:", result["ok"])
+print("output:", result["output"])
+
+print("\n--- mp_sleep ---")
+print("Sleeping 100ms...")
+mp_sleep(100)
+print("Done!")
+
+print("\n=== Demo Complete ===")
