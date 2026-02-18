@@ -1,0 +1,145 @@
+# Socket Demo
+# Demonstrates network socket programming
+# Note: Some examples require network access or a running server
+
+print("=== Socket Demo ===\n")
+
+# 1. Basic socket creation
+print("1. Socket creation:")
+sock = socket_create()
+print("   Created socket handle:", sock)
+socket_close(sock)
+print("   Socket closed")
+
+# 2. Hostname resolution
+print("\n2. Hostname resolution:")
+ip = socket_gethostbyname("localhost")
+print("   localhost ->", ip)
+
+# IP addresses pass through unchanged
+ip = socket_gethostbyname("127.0.0.1")
+print("   127.0.0.1 ->", ip)
+
+ip = socket_gethostbyname("93.184.216.34")
+print("   93.184.216.34 ->", ip)
+
+# Note: DNS resolution for hostnames like "example.com" requires async I/O
+# Use IP addresses directly or http_* functions for web requests
+
+# 3. Get local hostname
+print("\n3. Local hostname:")
+hostname = socket_gethostname()
+print("   Hostname:", hostname)
+
+# 4. HTTP client example (raw sockets with hostname)
+print("\n4. HTTP client (raw socket to example.com):")
+print("   Note: Uses HostName.connect with DNS resolution")
+
+sock = socket_create()
+# Connect using hostname - DNS resolution is now supported
+result = socket_connect(sock, "example.com", 80)
+
+if result["ok"]:
+    print("   Connected to example.com:80")
+    
+    # Send HTTP request
+    request = "GET / HTTP/1.1\r\nHost: example.com\r\nConnection: close\r\n\r\n"
+    send_result = socket_send(sock, request)
+    print("   Sent", send_result["bytes_sent"], "bytes")
+    
+    # Receive response (just first chunk)
+    recv_result = socket_recv(sock, 512)
+    if recv_result["ok"]:
+        print("   Received", recv_result["bytes_received"], "bytes")
+        # Show first line of response
+        data = recv_result["data"]
+        first_line = ""
+        for c in data:
+            if c == "\r" or c == "\n":
+                break
+            first_line = first_line + c
+        print("   Response:", first_line)
+    else:
+        print("   Receive error:", recv_result["error"])
+else:
+    print("   " + result["error"])
+    print("   (Use http_get() for web requests instead)")
+
+socket_close(sock)
+print("   Socket closed")
+
+# 5. Local connection test (connect to localhost)
+print("\n5. Local connection test:")
+sock = socket_create()
+# Try connecting to a local port (will fail if nothing is listening)
+result = socket_connect(sock, "127.0.0.1", 80)
+if result["ok"]:
+    print("   Connected to localhost:80")
+else:
+    print("   Expected: no server on localhost:80")
+socket_close(sock)
+
+# 6. Server socket example (bind only, no accept)
+print("\n6. Server socket (bind to localhost:9999):")
+server = socket_create()
+result = socket_bind(server, "127.0.0.1", 9999)
+
+if result["ok"]:
+    print("   Server bound to 127.0.0.1:9999")
+    print("   (In a real app, you would call socket_accept here)")
+else:
+    print("   Bind failed:", result["error"])
+    print("   (Port may be in use)")
+
+socket_close(server)
+print("   Server socket closed")
+
+# 7. Socket timeout
+print("\n7. Socket timeout:")
+sock = socket_create()
+socket_settimeout(sock, 5000)
+print("   Set 5 second timeout on socket", sock)
+socket_close(sock)
+
+# 8. Cleanup
+print("\n8. Cleanup:")
+socket_deinit()
+print("   Socket module deinitialized")
+
+print("\n=== Done ===")
+
+# Example functions for reference (not executed)
+print("\n--- Reference: Echo Server Pattern ---")
+print("""
+def echo_server(port):
+    server = socket_create()
+    socket_bind(server, "0.0.0.0", port)
+    print("Listening on port", port)
+    
+    while true:
+        conn = socket_accept(server)
+        client = conn[0]
+        
+        while true:
+            result = socket_recv(client)
+            if not result["ok"]:
+                break
+            socket_send(client, result["data"])
+        
+        socket_close(client)
+""")
+
+print("\n--- Reference: Client Pattern ---")
+print("""
+def send_message(host, port, message):
+    sock = socket_create()
+    result = socket_connect(sock, host, port)
+    
+    if result["ok"]:
+        socket_send(sock, message)
+        response = socket_recv(sock)
+        socket_close(sock)
+        return response["data"]
+    
+    return none
+""")

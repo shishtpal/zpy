@@ -490,6 +490,7 @@ fn stringifyValue(allocator: std.mem.Allocator, output: *std.ArrayList(u8), valu
             }
         },
         .function => try output.appendSlice(allocator, "null"),
+        .socket => try output.appendSlice(allocator, "null"),
     }
 }
 

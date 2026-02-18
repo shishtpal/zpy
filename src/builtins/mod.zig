@@ -26,6 +26,7 @@ pub const getOsBuiltin = @import("os_methods.zig").getOsBuiltin;
 pub const getMathBuiltin = @import("math_methods.zig").getMathBuiltin;
 pub const getMpBuiltin = @import("mp_methods.zig").getMpBuiltin;
 pub const getSubprocessBuiltin = @import("subprocess_methods.zig").getSubprocessBuiltin;
+pub const getSocketBuiltin = @import("socket_methods.zig").getSocketBuiltin;
 
 // Shared process utilities (used by mp_methods and subprocess_methods)
 pub const process_utils = @import("process_utils.zig");

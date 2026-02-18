@@ -185,5 +185,6 @@ fn stringifyZpyValue(allocator: std.mem.Allocator, output: *std.ArrayList(u8), v
             try output.append(allocator, '}');
         },
         .function => try output.appendSlice(allocator, "null"), // Functions serialize to null
+        .socket => try output.appendSlice(allocator, "null"), // Sockets serialize to null
     }
 }

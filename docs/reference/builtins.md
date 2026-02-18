@@ -2,7 +2,17 @@
 
 ZPy provides the following built-in functions.
 
-> **Note:** For file system operations, see [File System](/reference/filesystem).
+> **Module Documentation:**
+> - [File System](/reference/filesystem) - File and directory operations
+> - [JSON](/reference/json) - JSON parsing and serialization
+> - [YAML](/reference/yaml) - YAML parsing and serialization
+> - [CSV](/reference/csv) - CSV file operations
+> - [HTTP](/reference/http) - HTTP client requests
+> - [OS](/reference/os) - Operating system utilities
+> - [Math](/reference/math) - Mathematical functions
+> - [Subprocess](/reference/subprocess) - External process execution
+> - [Multiprocessing](/reference/multiprocessing) - ZPy script parallelization
+> - [Socket](/reference/socket) - Network socket programming
 
 ## Output
 
