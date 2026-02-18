@@ -16,6 +16,8 @@ test {
     std.testing.refAllDecls(@import("builtins/string_methods.zig"));
     std.testing.refAllDecls(@import("builtins/list_methods.zig"));
     std.testing.refAllDecls(@import("builtins/dict_methods.zig"));
+    std.testing.refAllDecls(@import("builtins/subprocess_methods.zig"));
+    std.testing.refAllDecls(@import("builtins/process_utils.zig"));
 }
 
 // ============================================================================

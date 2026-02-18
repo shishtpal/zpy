@@ -25,3 +25,7 @@ pub const callDictMethod = @import("dict_methods.zig").callDictMethod;
 pub const getOsBuiltin = @import("os_methods.zig").getOsBuiltin;
 pub const getMathBuiltin = @import("math_methods.zig").getMathBuiltin;
 pub const getMpBuiltin = @import("mp_methods.zig").getMpBuiltin;
+pub const getSubprocessBuiltin = @import("subprocess_methods.zig").getSubprocessBuiltin;
+
+// Shared process utilities (used by mp_methods and subprocess_methods)
+pub const process_utils = @import("process_utils.zig");

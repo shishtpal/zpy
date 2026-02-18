@@ -5,18 +5,16 @@
 //! - Process management: `mp_spawn`, `mp_wait`, `mp_poll`, `mp_kill`
 //! - System info: `mp_cpu_count`
 //! - Timing: `mp_sleep`
+//!
+//! Resource Management:
+//! - Call `mp_deinit()` to clean up global state (optional, called automatically on exit)
 
 const std = @import("std");
-const builtin = @import("builtin");
 const runtime = @import("../runtime/mod.zig");
 const Value = runtime.Value;
+const process_utils = @import("process_utils.zig");
 
-pub const BuiltinError = error{
-    WrongArgCount,
-    TypeError,
-    OutOfMemory,
-    ValueError,
-};
+pub const BuiltinError = process_utils.BuiltinError;
 
 pub const MpBuiltinFn = *const fn ([]Value, std.mem.Allocator, std.Io) BuiltinError!Value;
 
@@ -31,6 +29,7 @@ pub fn getMpBuiltin(name: []const u8) ?MpBuiltinFn {
         .{ "mp_kill", mpKill },
         .{ "mp_cpu_count", mpCpuCount },
         .{ "mp_sleep", mpSleep },
+        .{ "mp_deinit", mpDeinit },
     });
     return builtins.get(name);
 }
@@ -53,49 +52,20 @@ fn getChildren(allocator: std.mem.Allocator) *std.AutoHashMap(i64, ChildState) {
     return &children.?;
 }
 
-// ============================================================================
-// Helper: Build result dict from process output
-// ============================================================================
+/// Clean up global process table state.
+/// Call this to release resources when done with multiprocessing operations.
+/// This is optional - the OS will clean up on process exit.
+fn mpDeinit(args: []Value, _: std.mem.Allocator, _: std.Io) BuiltinError!Value {
+    if (args.len != 0) return BuiltinError.WrongArgCount;
 
-fn buildResultDict(allocator: std.mem.Allocator, term: std.process.Child.Term, stdout_data: []const u8, stderr_data: []const u8) BuiltinError!Value {
-    const dict = allocator.create(Value.Dict) catch return BuiltinError.OutOfMemory;
-    dict.* = Value.Dict.init(allocator);
+    if (children) |*table| {
+        // Note: We don't kill running processes here - that's mp_kill's job
+        table.deinit();
+        children = null;
+    }
+    next_handle = 1;
 
-    const ok_key = Value{ .string = allocator.dupe(u8, "ok") catch return BuiltinError.OutOfMemory };
-    const exit_key = Value{ .string = allocator.dupe(u8, "exit_code") catch return BuiltinError.OutOfMemory };
-    const stdout_key = Value{ .string = allocator.dupe(u8, "stdout") catch return BuiltinError.OutOfMemory };
-    const stderr_key = Value{ .string = allocator.dupe(u8, "stderr") catch return BuiltinError.OutOfMemory };
-    const output_key = Value{ .string = allocator.dupe(u8, "output") catch return BuiltinError.OutOfMemory };
-
-    const exit_code: i64 = switch (term) {
-        .exited => |code| @intCast(code),
-        .signal => |sig| -@as(i64, @intCast(@intFromEnum(sig))),
-        .stopped => |code| -@as(i64, @intCast(code)),
-        .unknown => |code| -@as(i64, @intCast(code)),
-    };
-
-    const ok = exit_code == 0;
-
-    dict.set(ok_key, .{ .boolean = ok }) catch return BuiltinError.OutOfMemory;
-    dict.set(exit_key, .{ .integer = exit_code }) catch return BuiltinError.OutOfMemory;
-    dict.set(stdout_key, .{ .string = allocator.dupe(u8, stdout_data) catch return BuiltinError.OutOfMemory }) catch return BuiltinError.OutOfMemory;
-    dict.set(stderr_key, .{ .string = allocator.dupe(u8, stderr_data) catch return BuiltinError.OutOfMemory }) catch return BuiltinError.OutOfMemory;
-
-    const output = blk: {
-        if (stderr_data.len > 0 and stdout_data.len > 0) {
-            var combined: std.ArrayList(u8) = .empty;
-            combined.appendSlice(allocator, stdout_data) catch return BuiltinError.OutOfMemory;
-            combined.appendSlice(allocator, stderr_data) catch return BuiltinError.OutOfMemory;
-            break :blk combined.toOwnedSlice(allocator) catch return BuiltinError.OutOfMemory;
-        } else if (stderr_data.len > 0) {
-            break :blk allocator.dupe(u8, stderr_data) catch return BuiltinError.OutOfMemory;
-        } else {
-            break :blk allocator.dupe(u8, stdout_data) catch return BuiltinError.OutOfMemory;
-        }
-    };
-    dict.set(output_key, .{ .string = output }) catch return BuiltinError.OutOfMemory;
-
-    return .{ .dict = dict };
+    return .none;
 }
 
 // ============================================================================
@@ -143,7 +113,7 @@ fn mpRun(args: []Value, allocator: std.mem.Allocator, io: std.Io) BuiltinError!V
     defer allocator.free(result.stdout);
     defer allocator.free(result.stderr);
 
-    return buildResultDict(allocator, result.term, result.stdout, result.stderr);
+    return process_utils.buildResultDict(allocator, result.term, result.stdout, result.stderr);
 }
 
 /// mp_run_code(code_string, args_list?) -> dict
@@ -180,7 +150,7 @@ fn mpRunCode(args: []Value, allocator: std.mem.Allocator, io: std.Io) BuiltinErr
     defer allocator.free(result.stdout);
     defer allocator.free(result.stderr);
 
-    return buildResultDict(allocator, result.term, result.stdout, result.stderr);
+    return process_utils.buildResultDict(allocator, result.term, result.stdout, result.stderr);
 }
 
 // ============================================================================
@@ -230,18 +200,11 @@ fn mpWait(args: []Value, allocator: std.mem.Allocator, io: std.Io) BuiltinError!
     const table = getChildren(allocator);
 
     var entry = table.fetchRemove(handle) orelse return BuiltinError.ValueError;
-    var child = &entry.value.child;
+    const child = &entry.value.child;
 
     const term = child.wait(io) catch return BuiltinError.ValueError;
 
-    const exit_code: i64 = switch (term) {
-        .exited => |code| @intCast(code),
-        .signal => |sig| -@as(i64, @intCast(@intFromEnum(sig))),
-        .stopped => |code| -@as(i64, @intCast(code)),
-        .unknown => |code| -@as(i64, @intCast(code)),
-    };
-
-    return .{ .integer = exit_code };
+    return .{ .integer = process_utils.extractTermExitCode(term) };
 }
 
 /// mp_poll(handle) -> int or none
@@ -270,9 +233,9 @@ fn mpKill(args: []Value, allocator: std.mem.Allocator, io: std.Io) BuiltinError!
     const table = getChildren(allocator);
 
     var entry = table.fetchRemove(handle) orelse return .{ .boolean = false };
-    var child = &entry.value.child;
+    const child = &entry.value.child;
 
-    child.kill(io);
+    process_utils.cleanupChild(child, io);
 
     return .{ .boolean = true };
 }
@@ -285,9 +248,7 @@ fn mpKill(args: []Value, allocator: std.mem.Allocator, io: std.Io) BuiltinError!
 /// Returns the number of logical CPUs available.
 fn mpCpuCount(args: []Value, _: std.mem.Allocator, _: std.Io) BuiltinError!Value {
     if (args.len != 0) return BuiltinError.WrongArgCount;
-
-    const count = std.Thread.getCpuCount() catch return .{ .integer = 1 };
-    return .{ .integer = @intCast(count) };
+    return .{ .integer = process_utils.cpuCount() };
 }
 
 // ============================================================================
@@ -303,8 +264,7 @@ fn mpSleep(args: []Value, _: std.mem.Allocator, io: std.Io) BuiltinError!Value {
     const ms = args[0].integer;
     if (ms < 0) return BuiltinError.ValueError;
 
-    const duration = std.Io.Duration.fromMilliseconds(ms);
-    io.sleep(duration, .real) catch {};
+    process_utils.sleepMs(io, ms);
 
     return .none;
 }

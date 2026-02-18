@@ -1,0 +1,99 @@
+print("=== Subprocess Module Demo ===")
+print("")
+
+# --- proc_cpu_count ---
+print("CPU count:", proc_cpu_count())
+print("")
+
+# --- proc_shell: run a shell command ---
+print("--- proc_shell: echo via shell ---")
+result = proc_shell("echo hello from shell")
+print("ok:", result["ok"])
+print("exit_code:", result["exit_code"])
+print("stdout:", result["stdout"])
+print("")
+
+# --- proc_shell: dir/ls ---
+print("--- proc_shell: directory listing ---")
+result = proc_shell("dir /b examples\\*.zpy")
+print("ok:", result["ok"])
+print("stdout:", result["stdout"])
+print("")
+
+# --- proc_run: run arbitrary command ---
+print("--- proc_run: run a command ---")
+cmd = ["cmd.exe", "/C", "echo running from proc_run"]
+result = proc_run(cmd)
+print("ok:", result["ok"])
+print("stdout:", result["stdout"])
+print("")
+
+# --- proc_shell with stdin input ---
+print("--- proc_shell: send input to process ---")
+result = proc_shell("findstr hello", "hello world\ngoodbye world\nhello again\n")
+print("ok:", result["ok"])
+print("stdout:", result["stdout"])
+print("")
+
+# --- proc_open / proc_write / proc_communicate ---
+print("--- proc_open + proc_write + proc_communicate ---")
+cmd = ["cmd.exe", "/C", "findstr test"]
+handle = proc_open(cmd)
+print("handle:", handle)
+proc_write(handle, "test line 1\n")
+proc_write(handle, "other line\n")
+proc_write(handle, "test line 2\n")
+result = proc_communicate(handle)
+print("ok:", result["ok"])
+print("stdout:", result["stdout"])
+print("")
+
+# --- proc_open + proc_read ---
+print("--- proc_open + proc_read ---")
+cmd = ["cmd.exe", "/C", "echo line1 & echo line2 & echo line3"]
+handle = proc_open(cmd)
+output = proc_read(handle)
+print("output:", output)
+exit_code = proc_wait(handle)
+print("exit_code:", exit_code)
+print("")
+
+# --- proc_pid ---
+print("--- proc_pid ---")
+cmd = ["cmd.exe", "/C", "echo pid test"]
+handle = proc_open(cmd)
+pid = proc_pid(handle)
+print("pid:", pid)
+proc_close(handle)
+print("")
+
+# --- proc_run_all: parallel execution ---
+print("--- proc_run_all: 3 commands in parallel ---")
+cmds = [["cmd.exe", "/C", "echo process 1"], ["cmd.exe", "/C", "echo process 2"], ["cmd.exe", "/C", "echo process 3"]]
+results = proc_run_all(cmds)
+print("Got", len(results), "results")
+r1 = results[0]
+print("Process 1 stdout:", r1["stdout"])
+r2 = results[1]
+print("Process 2 stdout:", r2["stdout"])
+r3 = results[2]
+print("Process 3 stdout:", r3["stdout"])
+print("")
+
+# --- proc_pipe: pipe output between commands ---
+print("--- proc_pipe: echo | findstr ---")
+cmd1 = ["cmd.exe", "/C", "echo apple pie & echo banana split & echo apple sauce"]
+cmd2 = ["findstr", "apple"]
+result = proc_pipe(cmd1, cmd2)
+print("ok:", result["ok"])
+print("stdout:", result["stdout"])
+print("")
+
+# --- proc_sleep ---
+print("--- proc_sleep ---")
+print("Sleeping 100ms...")
+proc_sleep(100)
+print("Done!")
+print("")
+
+print("=== Demo Complete ===")
